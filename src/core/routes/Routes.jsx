@@ -23,10 +23,10 @@ const routes = [
         path: "/gift",
         element: <Gift />,
     },
-    {
-        path: "/deposit",
-        element: <Deposit />,
-    }
+    // {
+    //     path: "/deposit",
+    //     element: <Deposit />,
+    // }
 ]
 const router = createBrowserRouter(routes);
 export {router}
