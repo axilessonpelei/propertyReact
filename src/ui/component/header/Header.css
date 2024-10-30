@@ -1,0 +1,39 @@
+.header {
+    background-color: #b60dff;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.text {
+    margin: 0 20px;
+    align-self: center;
+    display: contents;
+}
+
+.container {
+    display: grid;
+    gap: 20px;
+    background-color: #987fce;
+    width: 100%;
+    color: #7ae9b7;
+    align-items: center;
+}
+
+.cc {
+    padding: 5px;
+    background-color: #34383b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+    display: -webkit-box;
+    text-decoration: none;
+}
+
+
+.cc:hover {
+    background-color: #1189ae;
+}
