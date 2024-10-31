@@ -3,10 +3,12 @@ import { createContext, useState } from "react";
 const Context = createContext({});
 
 const ContextProvider = ({ children }) => {
+    const [wallet, setWallet] = useState("");
 
-
-    //Добавить в values "sortedProducts, setSortedProducts"
-    const values = {};
+    const values = {
+        wallet,
+        setWallet,
+    };
 
     return <Context.Provider value={values}>{children}</Context.Provider>;
 };
