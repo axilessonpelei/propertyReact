@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Service from "../../../service/service.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "../../component/header/Header.jsx";
 
 export const Sale = () => {
     const [propertyId, setPropertyId] = useState("");
@@ -35,6 +36,7 @@ export const Sale = () => {
 
     return (
         <div className="container">
+            <Header />
             <header className="header mb-4">Недвижимость/Продажа</header>
 
             <form onSubmit={sale} className="mb-3">

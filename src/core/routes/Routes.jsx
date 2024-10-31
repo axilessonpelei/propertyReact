@@ -7,7 +7,7 @@ import {Gift} from "../../ui/pages/gift/Gift.jsx";
 
 const routes = [
     {
-        path: "/main",
+        path: "/",
         element: <Main />,
     },
     {
