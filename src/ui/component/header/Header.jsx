@@ -21,7 +21,6 @@ const Header = () => {
                 <p></p>
                 <Link to='/sale' className='cc'> продажа</Link>
                 <p></p>
-                <Link to="/property" className='cc'>моя недвижиммость</Link>
                 <Link to='/' className='cc'> HOME </Link>
             </div>
         </header>

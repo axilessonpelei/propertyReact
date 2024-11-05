@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Service from "../../../service/service.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../../component/header/Header.jsx";
@@ -8,35 +8,65 @@ export const Sale = () => {
     const [price, setPrice] = useState("");
     const [timeAfter, setTimeAfter] = useState("");
     const [saleId, setSaleId] = useState("");
+    const [propertiesForSale, setPropertiesForSale] = useState([]); // Состояние для списка недвижимости на продаже
+    const [myProperties, setMyProperties] = useState([]); // Состояние для "Моя недвижимость"
 
+    // Функция для выставления недвижимости на продажу
     const sale = async (e) => {
         e.preventDefault();
-        await Service.createSale(propertyId, price, timeAfter);
+        const newSale = await Service.createSale(propertyId, price, timeAfter);
+        setPropertiesForSale([...propertiesForSale, { ...newSale, status: 'Продается' }]);
     };
 
+    // Функция для перевода средств
     const transferFunds = async (e) => {
         e.preventDefault();
         await Service.transferFunds(saleId);
     };
 
+    // Функция для подтверждения продажи
     const confirmSale = async (e) => {
         e.preventDefault();
-        await Service.confirmSale(saleId);
+        const updatedProperty = await Service.confirmSale(saleId);
+        updatePropertyStatus(updatedProperty, 'Продано');
     };
 
+    // Функция для отмены продажи
     const cancelSale = async (e) => {
         e.preventDefault();
-        await Service.cancelSale(saleId);
+        const updatedProperty = await Service.cancelSale(saleId);
+        updatePropertyStatus(updatedProperty, 'Отменено');
     };
 
+    // Функция для возврата средств, если продажа не подтверждена
     const refundIfNotConfirmed = async (e) => {
         e.preventDefault();
-        await Service.refundIfNotConfirmed(saleId);
+        const updatedProperty = await Service.refundIfNotConfirmed(saleId);
+        updatePropertyStatus(updatedProperty, 'Возвращено');
     };
+
+    // Обновление статуса недвижимости в списке
+    const updatePropertyStatus = (updatedProperty, newStatus) => {
+        setPropertiesForSale(propertiesForSale.map(property =>
+            property.propertyId === updatedProperty.propertyId
+                ? { ...property, status: newStatus }
+                : property
+        ));
+    };
+
+    // Загрузка списка недвижимости при монтировании компонента
+    useEffect(() => {
+        const fetchProperties = async () => {
+            const properties = await Service.getPropertiesForSale();
+            setPropertiesForSale(properties);
+        };
+
+        fetchProperties();
+    }, []);
 
     return (
         <div className="container">
-            <Header />
+            <Header/>
             <header className="header mb-4">Недвижимость/Продажа</header>
 
             <form onSubmit={sale} className="mb-3">
@@ -52,7 +82,7 @@ export const Sale = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Price</label>
+                    <label>Цена</label>
                     <input
                         type="number"
                         className="form-control"
@@ -62,7 +92,7 @@ export const Sale = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Time After (in seconds)</label>
+                    <label>Время через (в секундах)</label>
                     <input
                         type="number"
                         className="form-control"
@@ -73,6 +103,7 @@ export const Sale = () => {
                 </div>
                 <button type="submit" className="btn btn-primary">Выставить на продажу</button>
             </form>
+
 
             <form onSubmit={transferFunds} className="mb-3">
                 <h5>Перевод средств</h5>
@@ -133,6 +164,22 @@ export const Sale = () => {
                 </div>
                 <button type="submit" className="btn btn-danger">Отмена при истечении</button>
             </form>
+
+            <h4>Продажа недвижимости</h4>
+            <div className="row">
+                {propertiesForSale.map((property) => (
+                    <div key={property.propertyId} className="col-12 col-md-4">
+                        <div className="card mb-3">
+                            <div className="card-body">
+                                <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
+                                <p className="card-text">Цена: {property.price} р.</p>
+                                <p className="card-text">Статус: {property.status}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
         </div>
     );
 };
