@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Service from "../../../service/service.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../component/header/Header.jsx";
 
 export const Property = () => {
     const [propertyType, setPropertyType] = useState("");
@@ -25,33 +24,17 @@ export const Property = () => {
         setPropertyType(""); // Сбрасываем тип недвижимости
     };
 
-    // Функции для изменения статуса недвижимости (например, дарение, продажа, залог)
-    const updatePropertyStatus = (propertyId, newStatus) => {
-        setProperties(properties.map(property =>
-            property.propertyId === propertyId
-                ? { ...property, status: newStatus } // Обновляем статус для указанной недвижимости
-                : property
-        ));
-    };
-
-    // Пример обработки статуса (например, статус продажи)
-    const handleSaleStatus = (propertyId) => {
-        updatePropertyStatus(propertyId, "на продаже");
-        // Здесь можно вызвать Service для обработки операции продажи
-    };
-
-    const handleGiftStatus = (propertyId) => {
-        updatePropertyStatus(propertyId, "подарена");
-        // Здесь можно вызвать Service для обработки операции дарения
-    };
-
-    const handleDepositStatus = (propertyId) => {
-        updatePropertyStatus(propertyId, "в залоге");
-        // Здесь можно вызвать Service для обработки операции залога
-    };
+    const handler = async () => {
+        await window.ethereum.request({method:'eth_requestAccounts'}).then((response) => {
+            console.log(response[0]);
+            Service.wallet = response[0]
+            console.log(Service.wallet);
+        })
+    }
 
     return (
         <div className="container">
+            <button className="btn btn-primary" onClick={handler}> авторизоваться </button>
             <form onSubmit={addProperty} className="mb-3">
                 <h5>Добавить недвижимость</h5>
                 <div className="form-group">
@@ -90,28 +73,9 @@ export const Property = () => {
                                 <p className="card-text">Статус: {property.status}</p> {/* Отображаем статус */}
                                 <div className="mt-3">
                                     {/* Кнопки для изменения статуса */}
-                                    {property.status === "доступна" && (
-                                        <>
-                                            <button
-                                                className="btn btn-warning mr-2"
-                                                onClick={() => handleSaleStatus(property.propertyId)}
-                                            >
-                                                Продать
-                                            </button>
-                                            <button
-                                                className="btn btn-info mr-2"
-                                                onClick={() => handleGiftStatus(property.propertyId)}
-                                            >
-                                                Подарить
-                                            </button>
-                                            <button
-                                                className="btn btn-secondary"
-                                                onClick={() => handleDepositStatus(property.propertyId)}
-                                            >
-                                                Залог
-                                            </button>
-                                        </>
-                                    )}
+                                    {property.status === "доступна"
+
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -121,3 +85,4 @@ export const Property = () => {
         </div>
     );
 };
+

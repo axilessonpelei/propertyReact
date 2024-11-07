@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Service from "../../../service/service.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../../component/header/Header.jsx";
+import Footer from "../../component/footer/Footer.jsx";
 
 export const Gift = () => {
     const [giftId, setGiftId] = useState(0);
@@ -41,10 +42,9 @@ export const Gift = () => {
     }, []);
 
     return (
+        <div>
+        <Header/>
         <div className="container">
-            <Header />
-            <header className="header mb-4">Недвижимость/Дарение</header>
-
             <div className="mt-4">
                 {/* Форма для создания подарка */}
                 <form onSubmit={createGift} className="mb-3">
@@ -85,7 +85,7 @@ export const Gift = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-success">Подтверждение дарения</button>
+                    <button type="submit" className="btn btn-primary">Подтверждение дарения</button>
                 </form>
 
                 {/* Форма для отмены подарка */}
@@ -101,7 +101,7 @@ export const Gift = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-danger">Отмена дарения</button>
+                    <button type="submit" className="btn btn-primary">Отмена дарения</button>
                 </form>
             </div>
 
@@ -126,8 +126,8 @@ export const Gift = () => {
                     )}
                 </div>
             </div>
-
-            <footer className="mt-4"></footer>
+        </div>
+            <Footer />
         </div>
     );
 };

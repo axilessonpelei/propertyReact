@@ -25,6 +25,19 @@
         "type": "uint256"
       }
     ],
+    "name": "cancelDeposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_depositId",
+        "type": "uint256"
+      }
+    ],
     "name": "cancelDepositOffer",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -163,11 +176,338 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_depositId",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "forecloseDeposit",
+    "name": "deposits",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "propertyId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timePassed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "depositPeriod",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "beingPledged",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "confirmed",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "active",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "pledgee",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllDeposit",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "propertyId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timePassed",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "depositPeriod",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "beingPledged",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "confirmed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "pledgee",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct PropertyContract.Deposit[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllGifts",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "propertyId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timePassed",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct PropertyContract.Gift[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllPropertys",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "propertyId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastAction",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "area",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "serviceLife",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "forSale",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "deposit",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "gifted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "propertyType",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct PropertyContract.Property[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllSale",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "propertyId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timeAfter",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timePassed",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "buyer",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct PropertyContract.Sale[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "gifts",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "propertyId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timePassed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "properties",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "propertyId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastAction",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "area",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "serviceLife",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "forSale",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "deposit",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "gifted",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "propertyType",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_saleId",
+        "type": "uint256"
+      }
+    ],
+    "name": "refundFunds",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -202,6 +542,45 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "sales",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "propertyId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timeAfter",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timePassed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "_depositId",
         "type": "uint256"
       }
@@ -228,366 +607,13 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "_depositId",
         "type": "uint256"
       }
     ],
-    "name": "deposits",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "propertyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "pledgee",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "depositPeriod",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "beingPledged",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "confirmed",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "active",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timePassed",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAllDeposit",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "propertyId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "pledgee",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "depositPeriod",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "beingPledged",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "confirmed",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "active",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timePassed",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct PropertyContract.Deposit[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAllGifts",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "propertyId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timePassed",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct PropertyContract.Gift[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAllPropertys",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "propertyId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "propertyType",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "serviceLife",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "forSale",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "deposit",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "gifted",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "area",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "lastAction",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct PropertyContract.Property[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAllSale",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "propertyId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "buyer",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timeAfter",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timePassed",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct PropertyContract.Sale[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "gifts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "propertyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timePassed",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "properties",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "propertyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "propertyType",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "serviceLife",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "forSale",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "deposit",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "gifted",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "area",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastAction",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "sales",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "propertyId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeAfter",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timePassed",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "transferProperty",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

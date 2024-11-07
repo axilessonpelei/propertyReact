@@ -3,7 +3,7 @@ import  abi from "./abi.json";
 
 class Services{
     web3 = new Web3(window.ethereum)
-    contractAddress = '0x4cFC1fF8a3e6dbf69c75c37364A00f7C808EBFb9'
+    contractAddress = '0xdC8718a41AA2bD3021447cA0a1dEC0A82F0CD1B1'
     contract = new this.web3.eth.Contract(abi, this.contractAddress)
     wallet =''
 //добавление недвижки
@@ -33,11 +33,20 @@ class Services{
         } catch(error){console.log(error)}
     }
 
-    //возврат средств при отказе
+    //отмена продажи
     async cancelSale (_saled){
         try{
             return  await this.contract.methods.cancelSale(_saled).send({from: this.wallet})
         } catch(error){console.log(error)}
+    }
+
+    //возврат при  отказе
+    async refundFunds (_propertyId,_price, _timeAfter){
+        try{
+            return await this.contract.methods.refundFunds(_propertyId,_price, _timeAfter).send({from: this.wallet})
+        } catch(error){
+            console.log(error.message)
+        }
     }
 
     // возврат средств при истечении
@@ -87,6 +96,14 @@ class Services{
             return await this.contract.methods.confirmDeposit(_depositId).send({from: this.wallet})
         } catch(error){console.log(error)}
     }
+
+    //отмена залога
+    async cancelDeposit (_depositId){
+        try{
+            return await this.contract.methods.cancelDeposit(_depositId).send({from: this.wallet})
+        } catch(error){console.log(error)}
+    }
+
     //возврат средств
     async cancelDepositOffer (_depositId){
         try{
@@ -100,9 +117,9 @@ class Services{
         } catch(error){console.log(error)}
     }
     //переход собственности
-    async forecloseDeposit (_depositId){
+    async transferProperty (_depositId){
         try{
-            return await this.contract.methods.forecloseDeposit(_depositId).send({from: this.wallet})
+            return await this.contract.methods.transferProperty(_depositId).send({from: this.wallet})
         } catch(error){console.log(error)}
     }
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Service from "../../../service/service.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../../component/header/Header.jsx";
+import Footer from "../../component/footer/Footer.jsx";
 
 export const Deposit = () => {
     const [depositId, setDepositId] = useState('');
@@ -40,6 +41,11 @@ export const Deposit = () => {
         await Service.confirmDeposit(depositId);
         fetchDepositedProperties();  // Обновляем список
     };
+    const cancelDeposit = async (e) => {
+        e.preventDefault();
+        await Service.cancelDeposit(depositId);
+        fetchDepositedProperties();  // Обновляем список
+    };
 
     const cancelDepositOffer = async (e) => {
         e.preventDefault();
@@ -53,16 +59,16 @@ export const Deposit = () => {
         fetchDepositedProperties();  // Обновляем список
     };
 
-    const forecloseDeposit = async (e) => {
+    const transferProperty = async (e) => {
         e.preventDefault();
-        await Service.forecloseDeposit(depositId);
+        await Service.transferProperty(depositId);
         fetchDepositedProperties();  // Обновляем список
     };
 
     return (
+        <div>
+        <Header />
         <div className="container">
-            <Header />
-            <header className="header mb-4">Недвижимость/Залог</header>
             <div className="mt-4">
                 {/* Форма для создания залога */}
                 <form onSubmit={deposit}>
@@ -114,8 +120,24 @@ export const Deposit = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-warning">Взять объект в залог</button>
+                    <button type="submit" className="btn btn-primary">Взять объект в залог</button>
                 </form>
+
+                <form onSubmit={cancelDeposit} className="mb-3">
+                    <div className="mb-3">
+                        <label htmlFor="takeInId" className="form-label">ID залога</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="takeInId"
+                            value={depositId}
+                            onChange={(e) => setDepositId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-primary">отмена залога</button>
+                </form>
+
 
                 <form onSubmit={confirmDeposit} className="mb-3">
                     <div className="mb-3">
@@ -129,7 +151,7 @@ export const Deposit = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-success">Подтверждение залога</button>
+                    <button type="submit" className="btn btn-primary">Подтверждение залога</button>
                 </form>
 
                 <form onSubmit={cancelDepositOffer} className="mb-3">
@@ -144,7 +166,7 @@ export const Deposit = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-danger">Возврат средств при отмене залога</button>
+                    <button type="submit" className="btn btn-primary">Возврат средств при отмене залога</button>
                 </form>
 
                 <form onSubmit={repayDeposit} className="mb-3">
@@ -159,10 +181,10 @@ export const Deposit = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-info">Погашение залога</button>
+                    <button type="submit" className="btn btn-primary">Погашение залога</button>
                 </form>
 
-                <form onSubmit={forecloseDeposit} className="mb-3">
+                <form onSubmit={transferProperty} className="mb-3">
                     <div className="mb-3">
                         <label htmlFor="forecloseId" className="form-label">ID для перехода собственности</label>
                         <input
@@ -174,7 +196,7 @@ export const Deposit = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-secondary">Переход собственности</button>
+                    <button type="submit" className="btn btn-primary">Переход собственности</button>
                 </form>
             </div>
 
@@ -202,6 +224,8 @@ export const Deposit = () => {
             </div>
 
             <footer className="mt-4"></footer>
+        </div>
+            <Footer />
         </div>
     );
 };
