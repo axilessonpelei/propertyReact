@@ -123,5 +123,37 @@ class Services{
         } catch(error){console.log(error)}
     }
 
+    async getPropertiesByOwner() {
+        try {
+            return await this.contract.methods.getPropertiesByOwner().call();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async getAllSale() {
+        try {
+            return await this.contract.methods.getAllSale().call();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async getAllGifts() {
+        try {
+            return await this.contract.methods.getAllSale().call();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async getAllDeposit() {
+        try {
+            return await this.contract.methods.getAllSale().call();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 }
 export default new Services();

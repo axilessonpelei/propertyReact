@@ -12,57 +12,57 @@ export const Deposit = () => {
     const [depositedProperties, setDepositedProperties] = useState([]);  // Состояние для хранения недвижимости в залоге
 
     // Функция для получения недвижимости в залоге
-    const fetchDepositedProperties = async () => {
-        const properties = await Service.getDepositedProperties();  // Предполагаем, что есть такой метод
+    const getAllDeposit = async () => {
+        const properties = await Service.getAllDeposit([]);  // Предполагаем, что есть такой метод
         setDepositedProperties(properties);
     };
 
     // Загружаем недвижимость при монтировании компонента
     useEffect(() => {
-        fetchDepositedProperties();
+        getAllDeposit();
     }, []);
 
     // Функция для создания залога
     const deposit = async (e) => {
         e.preventDefault();
         await Service.createDepositOffer(propertyId, amount, term);  // Отправляем запрос на создание залога
-        fetchDepositedProperties();  // Обновляем список недвижимости в залоге
+        getAllDeposit();  // Обновляем список недвижимости в залоге
     };
 
     // Функции для разных операций с залогами
     const takeInDeposit = async (e) => {
         e.preventDefault();
         await Service.takeInDeposit(depositId);
-        fetchDepositedProperties();  // Обновляем список
+        getAllDeposit();  // Обновляем список
     };
 
     const confirmDeposit = async (e) => {
         e.preventDefault();
         await Service.confirmDeposit(depositId);
-        fetchDepositedProperties();  // Обновляем список
+        getAllDeposit();  // Обновляем список
     };
     const cancelDeposit = async (e) => {
         e.preventDefault();
         await Service.cancelDeposit(depositId);
-        fetchDepositedProperties();  // Обновляем список
+        getAllDeposit();  // Обновляем список
     };
 
     const cancelDepositOffer = async (e) => {
         e.preventDefault();
         await Service.cancelDepositOffer(depositId);
-        fetchDepositedProperties();  // Обновляем список
+        getAllDeposit();  // Обновляем список
     };
 
     const repayDeposit = async (e) => {
         e.preventDefault();
         await Service.repayDeposit(depositId);
-        fetchDepositedProperties();  // Обновляем список
+        getAllDeposit();  // Обновляем список
     };
 
     const transferProperty = async (e) => {
         e.preventDefault();
         await Service.transferProperty(depositId);
-        fetchDepositedProperties();  // Обновляем список
+        getAllDeposit();  // Обновляем список
     };
 
     return (

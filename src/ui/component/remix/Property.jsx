@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Service from "../../../service/service.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -7,22 +7,41 @@ export const Property = () => {
     const [area, setArea] = useState("");
     const [properties, setProperties] = useState([]); // Состояние для хранения добавленных объектов недвижимости
 
+    // Функция для загрузки недвижимости пользователя
+    const getPropertiesByOwner = async () => {
+        const userProperties = await Service.getPropertiesByOwner(); // Получаем все объекты недвижимости пользователя
+        const updatedProperties = userProperties.map((property) => {
+            // Определяем статус недвижимости в зависимости от состояния флагов
+            let status = "Доступна";
+            if (property.forSale) {
+                status = "Продается";
+            } else if (property.deposit) {
+                status = "В залоге";
+            } else if (property.gifted) {
+                status = "В дарении";
+            }
+            return { ...property, status };
+        });
+        setProperties(updatedProperties);
+
+    };
+
+    useEffect(() => {
+        getPropertiesByOwner();
+
+    }, []);
+
+
     // Функция для добавления недвижимости
     const addProperty = async (e) => {
-        e.preventDefault(); // Предотвращаем перезагрузку страницы
+        e.preventDefault();
         const newProperty = await Service.addProperty(propertyType, area); // Добавляем недвижимость через сервис
-        setProperties([
-            ...properties,
-            {
-                ...newProperty, // Добавляем объект недвижимости с новым статусом
-                propertyType,
-                area,
-                status: "доступна", // Устанавливаем начальный статус
-            },
-        ]);
+        setProperties([...properties, { ...newProperty, status: "Доступна" }]);
         setArea(""); // Сбрасываем поле площади
         setPropertyType(""); // Сбрасываем тип недвижимости
+        getPropertiesByOwner()
     };
+
 
     const handler = async () => {
         await window.ethereum.request({method:'eth_requestAccounts'}).then((response) => {
@@ -34,7 +53,7 @@ export const Property = () => {
 
     return (
         <div className="container">
-            <button className="btn btn-primary" onClick={handler}> авторизоваться </button>
+            <button className="btn btn-primary" onClick={handler}> авторизоваться</button>
             <form onSubmit={addProperty} className="mb-3">
                 <h5>Добавить недвижимость</h5>
                 <div className="form-group">
@@ -64,19 +83,13 @@ export const Property = () => {
             {/* Отображение карточек с недвижимостью */}
             <div className="row">
                 {properties.map((property) => (
-                    <div className="col-md-4 mb-4" key={property.propertyId}>
+                    <div key={property.propertyId} className="col-md-4 mb-4">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Недвижимость</h5>
+                                <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
                                 <p className="card-text">Площадь: {property.area} м²</p>
                                 <p className="card-text">Тип: {property.propertyType}</p>
                                 <p className="card-text">Статус: {property.status}</p> {/* Отображаем статус */}
-                                <div className="mt-3">
-                                    {/* Кнопки для изменения статуса */}
-                                    {property.status === "доступна"
-
-                                    }
-                                </div>
                             </div>
                         </div>
                     </div>

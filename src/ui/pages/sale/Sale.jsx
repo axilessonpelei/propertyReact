@@ -10,19 +10,31 @@ export const Sale = () => {
     const [timeAfter, setTimeAfter] = useState("");
     const [saleId, setSaleId] = useState("");
     const [propertiesForSale, setPropertiesForSale] = useState([]); // Состояние для списка недвижимости на продаже
-    const [myProperties, setMyProperties] = useState([]); // Состояние для "Моя недвижимость"
+
+
+    // Загрузка списка подаренных объектов
+    const getAllSale = async () => {
+        const properties = await Service.getAllSale(); // Получаем список с сервера
+        setPropertiesForSale(properties);
+    };
+    // Загружаем недвижимость при монтировании компонента
+    useEffect(() => {
+        getAllSale();
+    }, [])
 
     // Функция для выставления недвижимости на продажу
     const sale = async (e) => {
         e.preventDefault();
         const newSale = await Service.createSale(propertyId, price, timeAfter);
         setPropertiesForSale([...propertiesForSale, { ...newSale, status: 'Продается' }]);
+        getAllSale()
     };
 
     // Функция для перевода средств
     const transferFunds = async (e) => {
         e.preventDefault();
         await Service.transferFunds(saleId);
+        getAllSale()
     };
 
     // Функция для подтверждения продажи
@@ -30,6 +42,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.confirmSale(saleId);
         updatePropertyStatus(updatedProperty, 'Продано');
+        getAllSale()
     };
 
     // Функция для отмены продажи
@@ -37,6 +50,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.cancelSale(saleId);
         updatePropertyStatus(updatedProperty, 'Отменено');
+        getAllSale()
     };
 
 
@@ -45,6 +59,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.refundIfNotConfirmed(saleId);
         updatePropertyStatus(updatedProperty, 'Возвращено');
+        getAllSale()
     };
 
 
@@ -53,6 +68,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.refundFunds(saleId);
         updatePropertyStatus(updatedProperty, 'Возвращено');
+        getAllSale()
     };
 
     // Обновление статуса недвижимости в списке
@@ -64,15 +80,7 @@ export const Sale = () => {
         ));
     };
 
-    // Загрузка списка недвижимости при монтировании компонента
-    useEffect(() => {
-        const fetchProperties = async () => {
-            const properties = await Service.getPropertiesForSale();
-            setPropertiesForSale(properties);
-        };
 
-        fetchProperties();
-    }, []);
 
     return (
         <div className='ccont'>
@@ -198,7 +206,7 @@ export const Sale = () => {
                                 <div className="card-body">
                                     <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
                                     <p className="card-text">Цена: {property.price} р.</p>
-                                    <p className="card-text">Статус: {property.status}</p>
+                                    {<p className="card-text">Статус: {property.sale}</p>}
                                 </div>
                             </div>
                         </div>

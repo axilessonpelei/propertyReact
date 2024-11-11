@@ -11,35 +11,36 @@ export const Gift = () => {
     const [newOwner, setNewOwner] = useState("");
     const [giftedProperties, setGiftedProperties] = useState([]); // Состояние для хранения списка подаренных объектов
 
+    // Загрузка списка подаренных объектов
+    const getAllGifts = async () => {
+        const properties = await Service.getAllGifts(); // Получаем список с сервера
+        setGiftedProperties(properties);
+    };
+
+
+    // Загружаем недвижимость при монтировании компонента
+    useEffect(() => {
+        getAllGifts();
+    }, [])
+
     // Функция для создания подарка
     const createGift = async (e) => {
         e.preventDefault();
         await Service.createGift(giftId, newOwner);
-        fetchGiftedProperties(); // После создания подарка, обновляем список подаренных объектов
+        getAllGifts(); // После создания подарка, обновляем список подаренных объектов
     };
 
     // Функция для отмены подарка
     const cancelGift = async () => {
         await Service.cancelGift(cancelId);
-        fetchGiftedProperties(); // После отмены подарка, обновляем список
+        getAllGifts(); // После отмены подарка, обновляем список
     };
 
     // Функция для подтверждения подарка
     const confirmGift = async () => {
         await Service.confirmGift(confirmId);
-        fetchGiftedProperties(); // После подтверждения подарка, обновляем список
+        getAllGifts(); // После подтверждения подарка, обновляем список
     };
-
-    // Загрузка списка подаренных объектов
-    const fetchGiftedProperties = async () => {
-        const properties = await Service.getGiftedProperties(); // Получаем список с сервера
-        setGiftedProperties(properties);
-    };
-
-    // Загрузка подаренной недвижимости при монтировании компонента
-    useEffect(() => {
-        fetchGiftedProperties(); // Загрузка списка при монтировании компонента
-    }, []);
 
     return (
         <div>
