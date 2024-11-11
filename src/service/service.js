@@ -7,10 +7,15 @@ class Services{
     contract = new this.web3.eth.Contract(abi, this.contractAddress)
     wallet =''
 //добавление недвижки
-    async addProperty(_propertyId, _area){
-        try{
-            return await  this.contract.methods.addProperty(_propertyId,  _area).send({from: this.wallet})
-        } catch(error){console.log(error)}
+    async addProperty(propertyType, area) {
+        try {
+            const typeAsBool = propertyType === "жилая";
+            await this.contract.methods.addProperty(typeAsBool, area)
+                .send({ from: this.wallet });
+            return { propertyType, area };
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 //создание продажи
     async createSale (_propertyId,_price, _timeAfter){
@@ -123,11 +128,14 @@ class Services{
         } catch(error){console.log(error)}
     }
 
-    async getPropertiesByOwner() {
+    //вывод продаж
+    async getAllPropertys() {
         try {
-            return await this.contract.methods.getPropertiesByOwner().call();
+            const allProperties = await this.contract.methods.getAllPropertys().call();
+            return allProperties.filter(property => property.owner.toLowerCase() === this.wallet.toLowerCase());
         } catch (error) {
-            console.error(error);
+            console.error("Error fetching properties:", error);
+            return [];
         }
     }
 
@@ -138,15 +146,15 @@ class Services{
             console.error(error);
         }
     }
-
+    //вывод дарений
     async getAllGifts() {
         try {
-            return await this.contract.methods.getAllSale().call();
+            return await this.contract.methods.getAllGifts().call();
         } catch (error) {
             console.error(error);
         }
     }
-
+    //вывод залогов
     async getAllDeposit() {
         try {
             return await this.contract.methods.getAllSale().call();

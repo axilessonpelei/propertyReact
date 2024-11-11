@@ -1,59 +1,45 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Service from "../../../service/service.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export const Property = () => {
     const [propertyType, setPropertyType] = useState("");
     const [area, setArea] = useState("");
-    const [properties, setProperties] = useState([]); // Состояние для хранения добавленных объектов недвижимости
+    const [properties, setProperties] = useState([]);
 
-    // Функция для загрузки недвижимости пользователя
-    const getPropertiesByOwner = async () => {
-        const userProperties = await Service.getPropertiesByOwner(); // Получаем все объекты недвижимости пользователя
-        const updatedProperties = userProperties.map((property) => {
-            // Определяем статус недвижимости в зависимости от состояния флагов
-            let status = "Доступна";
-            if (property.forSale) {
-                status = "Продается";
-            } else if (property.deposit) {
-                status = "В залоге";
-            } else if (property.gifted) {
-                status = "В дарении";
-            }
-            return { ...property, status };
-        });
-        setProperties(updatedProperties);
 
+    const getAllPropertys = async () => {
+        const userProperties = await Service.getAllPropertys();
+        setProperties(userProperties);
     };
 
-    useEffect(() => {
-        getPropertiesByOwner();
 
+    useEffect(() => {
+        getAllPropertys();
     }, []);
 
 
-    // Функция для добавления недвижимости
     const addProperty = async (e) => {
         e.preventDefault();
-        const newProperty = await Service.addProperty(propertyType, area); // Добавляем недвижимость через сервис
-        setProperties([...properties, { ...newProperty, status: "Доступна" }]);
-        setArea(""); // Сбрасываем поле площади
-        setPropertyType(""); // Сбрасываем тип недвижимости
-        getPropertiesByOwner()
+        const newProperty = await Service.addProperty(propertyType, area);
+        setProperties([...properties, { ...newProperty, propertyType, status: "Доступна" }]);
+        setArea("");
+        setPropertyType("");
+        getAllPropertys();
     };
 
 
     const handler = async () => {
-        await window.ethereum.request({method:'eth_requestAccounts'}).then((response) => {
-            console.log(response[0]);
-            Service.wallet = response[0]
-            console.log(Service.wallet);
-        })
-    }
+        await window.ethereum.request({ method: "eth_requestAccounts" }).then((response) => {
+            console.log("Connected account:", response[0]);
+            Service.wallet = response[0];
+            getAllPropertys();
+        });
+    };
 
     return (
         <div className="container">
-            <button className="btn btn-primary" onClick={handler}> авторизоваться</button>
+            <button className="btn btn-primary" onClick={handler}>Авторизоваться</button>
             <form onSubmit={addProperty} className="mb-3">
                 <h5>Добавить недвижимость</h5>
                 <div className="form-group">
@@ -62,7 +48,7 @@ export const Property = () => {
                         type="number"
                         className="form-control"
                         value={area}
-                        onChange={(e) => setArea(e.target.value)} // Обновляем состояние площади
+                        onChange={(e) => setArea(e.target.value)}
                         required
                     />
                 </div>
@@ -71,7 +57,7 @@ export const Property = () => {
                         className="form-check-input"
                         type="checkbox"
                         checked={propertyType === "жилая"}
-                        onChange={(e) => setPropertyType(e.target.checked ? "жилая" : "")} // Обновляем состояние типа недвижимости
+                        onChange={(e) => setPropertyType(e.target.checked ? "жилая" : "нежилая")}
                     />
                     <label className="form-check-label">
                         Жилая недвижимость
@@ -80,16 +66,15 @@ export const Property = () => {
                 <button type="submit" className="btn btn-primary">Добавить недвижимость</button>
             </form>
 
-            {/* Отображение карточек с недвижимостью */}
-            <div className="row">
+            <div>
                 {properties.map((property) => (
                     <div key={property.propertyId} className="col-md-4 mb-4">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
                                 <p className="card-text">Площадь: {property.area} м²</p>
-                                <p className="card-text">Тип: {property.propertyType}</p>
-                                <p className="card-text">Статус: {property.status}</p> {/* Отображаем статус */}
+                                <p className="card-text">Тип: {property.propertyType ? "Жилая" : "Нежилая"}</p>
+                                <p className="card-text">Статус: {property.status}</p>
                             </div>
                         </div>
                     </div>
@@ -98,4 +83,3 @@ export const Property = () => {
         </div>
     );
 };
-

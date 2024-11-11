@@ -80,8 +80,6 @@ export const Sale = () => {
         ));
     };
 
-
-
     return (
         <div className='ccont'>
             <Header/>
