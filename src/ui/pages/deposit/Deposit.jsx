@@ -13,56 +13,60 @@ export const Deposit = () => {
 
     // Функция для получения недвижимости в залоге
     const getAllDeposit = async () => {
-        const properties = await Service.getAllDeposit([]);  // Предполагаем, что есть такой метод
+        const properties = await Service.getAllDeposit([]);
+        console.log(properties);
         setDepositedProperties(properties);
+        console.log(depositedProperties)
     };
 
     // Загружаем недвижимость при монтировании компонента
     useEffect(() => {
-        getAllDeposit();
+        (async ()=> {
+            await getAllDeposit()
+        })()
     }, []);
 
     // Функция для создания залога
     const deposit = async (e) => {
         e.preventDefault();
         await Service.createDepositOffer(propertyId, amount, term);  // Отправляем запрос на создание залога
-        getAllDeposit();  // Обновляем список недвижимости в залоге
+        await getAllDeposit();  // Обновляем список недвижимости в залоге
     };
 
     // Функции для разных операций с залогами
     const takeInDeposit = async (e) => {
         e.preventDefault();
         await Service.takeInDeposit(depositId);
-        getAllDeposit();  // Обновляем список
+        await getAllDeposit();  // Обновляем список
     };
 
     const confirmDeposit = async (e) => {
         e.preventDefault();
         await Service.confirmDeposit(depositId);
-        getAllDeposit();  // Обновляем список
+        await getAllDeposit();  // Обновляем список
     };
     const cancelDeposit = async (e) => {
         e.preventDefault();
         await Service.cancelDeposit(depositId);
-        getAllDeposit();  // Обновляем список
+        await getAllDeposit();  // Обновляем список
     };
 
     const cancelDepositOffer = async (e) => {
         e.preventDefault();
         await Service.cancelDepositOffer(depositId);
-        getAllDeposit();  // Обновляем список
+        await getAllDeposit();  // Обновляем список
     };
 
     const repayDeposit = async (e) => {
         e.preventDefault();
         await Service.repayDeposit(depositId);
-        getAllDeposit();  // Обновляем список
+        await getAllDeposit();  // Обновляем список
     };
 
     const transferProperty = async (e) => {
         e.preventDefault();
         await Service.transferProperty(depositId);
-        getAllDeposit();  // Обновляем список
+        await getAllDeposit();  // Обновляем список
     };
 
     return (
@@ -209,10 +213,11 @@ export const Deposit = () => {
                             <div key={property.propertyId} className="col-12 col-md-4">
                                 <div className="card mb-3">
                                     <div className="card-body">
-                                        <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
-                                        <p className="card-text">Сумма залога: {property.amount}</p>
-                                        <p className="card-text">Срок: {property.term} дней</p>
-                                        <p className="card-text">Статус: {property.status}</p>
+                                        <h5 className="card-title">Недвижимость ID: {property.propertyId.toString()}</h5>
+                                        <p className="card-text">Сумма залога: {property.amount.toString()}</p>
+                                        <p className="card-text">Срок: {property.depositPeriod.toString()} </p>
+                                        <p className="card-text">Активен: {property.active.toString()} </p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>

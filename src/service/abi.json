@@ -2,6 +2,17 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_addressToken",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bool",
         "name": "_propertyType",
         "type": "bool"
@@ -188,9 +199,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "timePassed",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "pledgee",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -218,12 +229,25 @@
         "type": "bool"
       },
       {
-        "internalType": "address",
-        "name": "pledgee",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "timePassed",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_depositId",
+        "type": "uint256"
+      }
+    ],
+    "name": "forecloseDeposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -238,9 +262,9 @@
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "timePassed",
-            "type": "uint256"
+            "internalType": "address",
+            "name": "pledgee",
+            "type": "address"
           },
           {
             "internalType": "uint256",
@@ -268,12 +292,12 @@
             "type": "bool"
           },
           {
-            "internalType": "address",
-            "name": "pledgee",
-            "type": "address"
+            "internalType": "uint256",
+            "name": "timePassed",
+            "type": "uint256"
           }
         ],
-        "internalType": "struct PropertyContract.Deposit[]",
+        "internalType": "struct MyToken.Deposit[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -293,17 +317,17 @@
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "timePassed",
-            "type": "uint256"
-          },
-          {
             "internalType": "address",
             "name": "newOwner",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timePassed",
+            "type": "uint256"
           }
         ],
-        "internalType": "struct PropertyContract.Gift[]",
+        "internalType": "struct MyToken.Gift[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -323,14 +347,14 @@
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "lastAction",
-            "type": "uint256"
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
           },
           {
-            "internalType": "uint256",
-            "name": "area",
-            "type": "uint256"
+            "internalType": "bool",
+            "name": "propertyType",
+            "type": "bool"
           },
           {
             "internalType": "uint256",
@@ -353,17 +377,17 @@
             "type": "bool"
           },
           {
-            "internalType": "bool",
-            "name": "propertyType",
-            "type": "bool"
+            "internalType": "uint256",
+            "name": "area",
+            "type": "uint256"
           },
           {
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
+            "internalType": "uint256",
+            "name": "lastAction",
+            "type": "uint256"
           }
         ],
-        "internalType": "struct PropertyContract.Property[]",
+        "internalType": "struct MyToken.Property[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -383,6 +407,11 @@
             "type": "uint256"
           },
           {
+            "internalType": "address",
+            "name": "buyer",
+            "type": "address"
+          },
+          {
             "internalType": "uint256",
             "name": "price",
             "type": "uint256"
@@ -396,14 +425,9 @@
             "internalType": "uint256",
             "name": "timePassed",
             "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "buyer",
-            "type": "address"
           }
         ],
-        "internalType": "struct PropertyContract.Sale[]",
+        "internalType": "struct MyToken.Sale[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -427,14 +451,14 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "timePassed",
-        "type": "uint256"
-      },
-      {
         "internalType": "address",
         "name": "newOwner",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "timePassed",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -456,14 +480,14 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "lastAction",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "area",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "propertyType",
+        "type": "bool"
       },
       {
         "internalType": "uint256",
@@ -486,14 +510,14 @@
         "type": "bool"
       },
       {
-        "internalType": "bool",
-        "name": "propertyType",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "area",
+        "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "lastAction",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -554,6 +578,11 @@
         "type": "uint256"
       },
       {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "price",
         "type": "uint256"
@@ -567,11 +596,6 @@
         "internalType": "uint256",
         "name": "timePassed",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -587,7 +611,7 @@
     ],
     "name": "takeInDeposit",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -599,19 +623,6 @@
       }
     ],
     "name": "transferFunds",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_depositId",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferProperty",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -115,9 +115,8 @@ export const Gift = () => {
                             <div key={property.propertyId} className="col-12 col-md-4">
                                 <div className="card mb-3">
                                     <div className="card-body">
-                                        <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
-                                        <p className="card-text">Новый владелец: {property.newOwner}</p>
-                                        <p className="card-text">Статус: {property.status}</p>
+                                        <h5 className="card-title">Недвижимость ID: {property.propertyId.toString()}</h5>
+                                        <p className="card-text">Новый владелец: {property.newOwner.toString()}</p>
                                     </div>
                                 </div>
                             </div>

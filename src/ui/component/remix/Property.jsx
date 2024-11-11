@@ -25,7 +25,7 @@ export const Property = () => {
         setProperties([...properties, { ...newProperty, propertyType, status: "Доступна" }]);
         setArea("");
         setPropertyType("");
-        getAllPropertys();
+        await getAllPropertys();
     };
 
 
@@ -67,14 +67,16 @@ export const Property = () => {
             </form>
 
             <div>
-                {properties.map((property) => (
-                    <div key={property.propertyId} className="col-md-4 mb-4">
+                {properties.map((property, index) => (
+                    <div key={index} className="col-md-4 mb-4">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
-                                <p className="card-text">Площадь: {property.area} м²</p>
-                                <p className="card-text">Тип: {property.propertyType ? "Жилая" : "Нежилая"}</p>
-                                <p className="card-text">Статус: {property.status}</p>
+                                <p className="card-title">Недвижимость ID: {property.propertyId.toString()}</p>
+                                <p className="card-text">Площадь: {property.area.toString()} м²</p>
+                                <p className="card-text">Тип: {property.propertyType.toString() ? "Жилая" : "Нежилая"}</p>
+                                <p className="card-text">Продажа: {property.forSale.toString()}</p>
+                                <p className="card-text">Дарение: {property.gifted.toString()}</p>
+                                <p className="card-text">Залог: {property.deposit.toString()}</p>
                             </div>
                         </div>
                     </div>

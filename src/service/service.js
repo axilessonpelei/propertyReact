@@ -10,11 +10,12 @@ class Services{
     async addProperty(propertyType, area) {
         try {
             const typeAsBool = propertyType === "жилая";
+            console.log(typeAsBool, area)
             await this.contract.methods.addProperty(typeAsBool, area)
                 .send({ from: this.wallet });
             return { propertyType, area };
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     }
 //создание продажи
@@ -157,7 +158,7 @@ class Services{
     //вывод залогов
     async getAllDeposit() {
         try {
-            return await this.contract.methods.getAllSale().call();
+            return await this.contract.methods.getAllDeposit().call();
         } catch (error) {
             console.error(error);
         }

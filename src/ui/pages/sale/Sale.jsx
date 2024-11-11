@@ -27,14 +27,14 @@ export const Sale = () => {
         e.preventDefault();
         const newSale = await Service.createSale(propertyId, price, timeAfter);
         setPropertiesForSale([...propertiesForSale, { ...newSale, status: 'Продается' }]);
-        getAllSale()
+        await getAllSale()
     };
 
     // Функция для перевода средств
     const transferFunds = async (e) => {
         e.preventDefault();
         await Service.transferFunds(saleId);
-        getAllSale()
+        await getAllSale()
     };
 
     // Функция для подтверждения продажи
@@ -42,7 +42,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.confirmSale(saleId);
         updatePropertyStatus(updatedProperty, 'Продано');
-        getAllSale()
+        await getAllSale()
     };
 
     // Функция для отмены продажи
@@ -50,7 +50,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.cancelSale(saleId);
         updatePropertyStatus(updatedProperty, 'Отменено');
-        getAllSale()
+        await getAllSale()
     };
 
 
@@ -59,7 +59,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.refundIfNotConfirmed(saleId);
         updatePropertyStatus(updatedProperty, 'Возвращено');
-        getAllSale()
+        await getAllSale()
     };
 
 
@@ -68,7 +68,7 @@ export const Sale = () => {
         e.preventDefault();
         const updatedProperty = await Service.refundFunds(saleId);
         updatePropertyStatus(updatedProperty, 'Возвращено');
-        getAllSale()
+        await getAllSale()
     };
 
     // Обновление статуса недвижимости в списке
@@ -152,7 +152,7 @@ export const Sale = () => {
                 </form>
 
                 <form onSubmit={cancelSale} className="mb-3">
-                    <h5>Отмена при отмене продажи</h5>
+                    <h5>Отмена продажи </h5>
                     <div className="form-group">
                         <label>Sale ID</label>
                         <input
@@ -167,7 +167,7 @@ export const Sale = () => {
                 </form>
 
                 <form onSubmit={refundFunds} className="mb-3">
-                    <h5>Отмена при истечении срока продажи</h5>
+                    <h5>возврат при истечении срока продажи</h5>
                     <div className="form-group">
                         <label>Sale ID</label>
                         <input
@@ -182,7 +182,7 @@ export const Sale = () => {
                 </form>
 
                 <form onSubmit={refundIfNotConfirmed} className="mb-3">
-                    <h5>Отмена при истечении срока продажи</h5>
+                    <h5>возврат при истечении срока продажи</h5>
                     <div className="form-group">
                         <label>Sale ID</label>
                         <input
@@ -198,13 +198,14 @@ export const Sale = () => {
 
                 <h4>Продажа недвижимости</h4>
                 <div className="row">
-                    {propertiesForSale.map((property) => (
-                        <div key={property.propertyId} className="col-12 col-md-4">
+                    {propertiesForSale.map((property, index) => (
+                        <div key={index} className="col-12 col-md-4">
                             <div className="card mb-3">
                                 <div className="card-body">
-                                    <h5 className="card-title">Недвижимость ID: {property.propertyId}</h5>
-                                    <p className="card-text">Цена: {property.price} р.</p>
-                                    {<p className="card-text">Статус: {property.sale}</p>}
+                                    <h5 className="card-title">Недвижимость ID: {property.propertyId.toString()}</h5>
+                                    <p className="card-text">Цена: {property.price.toString()} токенов.</p>
+                                    <p className="card-text">время после которого продажа не
+                                        актуальна: {property.timeAfter.toString()}</p>
                                 </div>
                             </div>
                         </div>
